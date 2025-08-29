@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jesse S. LakeYoungberg | Interactive Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .skill-tag, .experience-bullet {
+            transition: all 0.2s ease-in-out;
+        }
+        .highlight {
+            background-color: #e0f2fe !important; /* sky-100 */
+            border-color: #38bdf8 !important; /* sky-400 */
+            transform: scale(1.02);
+            box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
+        }
+        .project-card.highlight {
+             border-left-color: #38bdf8 !important; /* sky-400 */
+             border-left-width: 4px;
+        }
+        .highlight-text {
+            color: #0284c7 !important; /* sky-600 */
+            font-weight: 600;
+        }
+        .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .details.open {
+            max-height: 1500px; /* Increased for case studies */
+            transition: max-height 0.7s ease-in;
+        }
+        .section-title {
+            border-bottom: 2px solid #e2e8f0; /* slate-200 */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .filter-btn.active {
+            background-color: #0284c7; /* sky-600 */
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .case-study h4 {
+            font-weight: 600;
+            color: #0ea5e9; /* sky-500 */
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .tab-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .tab-btn.active {
+            border-bottom-color: #0284c7;
+            color: #0284c7;
+        }
+        #gemini-loader {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800" oncontextmenu="return false;">
+
+    <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 bg-white shadow-lg rounded-xl my-8">
+
+        <!-- Header Section -->
+        <header class="mb-6">
+            <div class="flex flex-col sm:flex-row items-center gap-6">
+                <img src="https://i.imgur.com/qZzduUw.jpeg" alt="Jesse S. LakeYoungberg" class="w-32 h-32 rounded-full shadow-md object-cover">
+                <div class="text-center sm:text-left">
+                    <h1 class="text-4xl font-bold text-slate-900">Jesse S. LakeYoungberg</h1>
+                    <p class="text-xl text-sky-700 font-medium mt-1">Operations & Product Management Leader</p>
+                    <div class="flex justify-center sm:justify-start items-center flex-wrap gap-x-4 gap-y-1 mt-3 text-slate-600">
+                        <a href="tel:541-231-5224" class="hover:text-sky-600 transition-colors">(541) 231-5224</a>
+                        <span class="hidden sm:inline">&bull;</span>
+                        <a href="mailto:jesse.lakeyoungberg@gmail.com" class="hover:text-sky-600 transition-colors">jesse.lakeyoungberg@gmail.com</a>
+                        <span class="hidden sm:inline">&bull;</span>
+                        <a href="https://www.linkedin.com/in/jlakeyou" target="_blank" class="hover:text-sky-600 transition-colors">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="border-b border-slate-200 mb-8">
+            <div id="tab-buttons" class="flex space-x-4 sm:space-x-8">
+                <button data-tab="resume" class="tab-btn py-4 px-1 border-b-2 font-medium text-slate-500 hover:border-sky-500 hover:text-sky-600 active">Professional Resume</button>
+                <button data-tab="projects" class="tab-btn py-4 px-1 border-b-2 font-medium text-slate-500 hover:border-sky-500 hover:text-sky-600">Projects & FAQ</button>
+                <button data-tab="about" class="tab-btn py-4 px-1 border-b-2 font-medium text-slate-500 hover:border-sky-500 hover:text-sky-600">About Me</button>
+            </div>
+        </nav>
+
+        <!-- Content Panels -->
+        <main>
+            <!-- Resume Panel -->
+            <div id="resume-panel" class="content-panel">
+                <!-- Personal Mission Section -->
+                <section class="mb-8 text-center p-4 bg-sky-50 rounded-lg border border-sky-200">
+                     <p class="text-slate-700 italic">"I am passionate about building efficient, scalable systems that bridge the gap between complex technical challenges and strategic business goals, ultimately creating products that make a tangible impact."</p>
+                </section>
+
+                <!-- Summary Section -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900 section-title">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Professional Summary
+                    </h2>
+                    <p class="text-slate-700 leading-relaxed">
+                        Results-driven Program and Product Management Leader with over 9 years of experience in biotech and tech industries. Proven expertise in integrating AI-driven solutions to streamline operations, enhance productivity, and drive multimillion-dollar revenue growth. Adept at leading cross-functional teams, implementing scalable processes, and ensuring regulatory compliance to achieve strategic objectives.
+                    </p>
+                </section>
+
+                <!-- Interactive Filter Section -->
+                <section class="mb-8 p-4 bg-slate-50 rounded-lg">
+                    <h3 class="text-lg font-semibold text-slate-800 mb-3 text-center">Interactive Resume Views</h3>
+                    <p class="text-center text-sm text-slate-600 mb-4">Click a role to highlight the most relevant skills and experiences.</p>
+                    <div id="filter-container" class="flex flex-wrap justify-center gap-2">
+                        <button data-filter="product" class="filter-btn px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition-colors">Product Manager</button>
+                        <button data-filter="software" class="filter-btn px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition-colors">Software Manager</button>
+                        <button data-filter="change" class="filter-btn px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition-colors">Change Manager</button>
+                        <button data-filter="logistics" class="filter-btn px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition-colors">Logistics Manager</button>
+                        <button data-filter="all" class="filter-btn px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-full hover:bg-slate-100 transition-colors active">View All</button>
+                    </div>
+                </section>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Left Column: Experience & Education -->
+                    <div class="md:col-span-2">
+                        <!-- Professional Experience -->
+                        <section>
+                            <h2 class="text-2xl font-bold text-slate-900 section-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                Professional Experience
+                            </h2>
+                            <div class="space-y-6">
+                                <!-- Experience entries here -->
+                                 <div class="relative pl-8">
+                                    <div class="absolute left-0 top-1 w-4 h-4 bg-sky-600 rounded-full border-4 border-white"></div>
+                                    <div class="absolute left-[7px] top-4 h-full w-0.5 bg-slate-200"></div>
+                                    <h3 class="text-lg font-semibold text-slate-800">Director of Technical Operations/Quality Lead</h3>
+                                    <p class="text-md text-slate-600">Sun Genomics, San Diego, CA</p>
+                                    <p class="text-sm text-slate-500">2022 - Present</p>
+                                    <ul class="mt-2 list-disc list-inside text-slate-700 space-y-2 text-sm">
+                                        <li class="experience-bullet" data-tags="change logistics"><strong>Operational Scaling:</strong> Drove rapid expansion by scaling the team by over 300% and growing product revenue to $7.5M through strategic process improvements.</li>
+                                        <li class="experience-bullet" data-tags="change logistics product software"><strong>People & Team Management:</strong> Directly led a diverse 15-person team across operations, quality, and logistics, overseeing skill development and succession planning.</li>
+                                        <li class="experience-bullet" data-tags="product software"><strong>Project Leadership:</strong> Led complex SaaS and internal software projects (LIMS, ERP, QMS), including customer-facing portals for test result delivery and physician dashboards.</li>
+                                        <li class="experience-bullet" data-tags="change logistics"><strong>Quality Management:</strong> Built and implemented a compliant QMS aligned with FDA 21 CFR Parts 11, 111, and 117, authoring 100+ SOPs and leading 6+ successful audits.</li>
+                                        <li class="experience-bullet" data-tags="logistics"><strong>Financial Planning & Analysis:</strong> Directed multi-million-dollar budgeting and forecasting, reducing monthly operating costs by over 75%.</li>
+                                        <li class="experience-bullet" data-tags="logistics software"><strong>Inventory and Supply Chain Management:</strong> Implemented AI-powered tools for inventory forecasting, reducing stock-outs by 95% and enhancing operational reliability.</li>
+                                        <li class="experience-bullet" data-tags="product change"><strong>Stakeholder & Vendor Management:</strong> Liaised with over 25 vendors and presented production insights to the Board, informing key budget allocations.</li>
+                                        <li class="experience-bullet" data-tags="product"><strong>B2B & B2C Strategy:</strong> Scaled D2C fulfillment through automation and led B2B clinical onboarding for 200+ physicians.</li>
+                                    </ul>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-0 top-1 w-4 h-4 bg-sky-600 rounded-full border-4 border-white"></div>
+                                    <div class="absolute left-[7px] top-4 h-full w-0.5 bg-slate-200"></div>
+                                    <h3 class="text-lg font-semibold text-slate-800">Senior Process Engineer</h3>
+                                    <p class="text-md text-slate-600">Sun Genomics, San Diego, CA</p>
+                                    <p class="text-sm text-slate-500">2019 - 2022</p>
+                                    <ul class="mt-2 list-disc list-inside text-slate-700 space-y-2 text-sm">
+                                        <li class="experience-bullet" data-tags="change logistics"><strong>Efficiency Optimization:</strong> Directed equipment procurement and process enhancements, achieving a 250% increase in production efficiency.</li>
+                                        <li class="experience-bullet" data-tags="logistics"><strong>Cost & Quality Control:</strong> Road mapped and managed projects to reduce COGS by 50%, improve gross margins, and maintain compliance with regulatory standards.</li>
+                                        <li class="experience-bullet" data-tags="change"><strong>Strategic Leadership:</strong> Provided key operational and organizational strategy to support an 8-figure capital investment through policy development and operational excellence initiatives.</li>
+                                        <li class="experience-bullet" data-tags="logistics software"><strong>Risk & Compliance Management:</strong> Executed Risk Management processes for manufacturing and laboratory processes to ensure ongoing compliance with FDA, CLIA, and CAP standards.</li>
+                                    </ul>
+                                </div>
+                                <div class="relative pl-8">
+                                    <div class="absolute left-0 top-1 w-4 h-4 bg-sky-600 rounded-full border-4 border-white"></div>
+                                    <div class="absolute left-[7px] top-4 h-full w-0.5 bg-slate-200"></div>
+                                    <h3 class="text-lg font-semibold text-slate-800">Process Engineer</h3>
+                                    <p class="text-md text-slate-600">Kyocera, San Diego, CA</p>
+                                    <p class="text-sm text-slate-500">2018 - 2019</p>
+                                    <ul class="mt-2 list-disc list-inside text-slate-700 space-y-2 text-sm">
+                                        <li class="experience-bullet" data-tags="change logistics"><strong>Process Design & Quality Improvement:</strong> Developed procedures to enhance efficiency and quality in semiconductor production; led initiatives for scaling up production capacity by 30%.</li>
+                                        <li class="experience-bullet" data-tags="product"><strong>Client Collaboration:</strong> Ensured client satisfaction by aligning production with specifications, conducting qualification studies, and optimizing processes, leading to 100% customer retention.</li>
+                                    </ul>
+                                </div>
+                                <div class="relative pl-8">
+                                     <div class="absolute left-0 top-1 w-4 h-4 bg-sky-600 rounded-full border-4 border-white"></div>
+                                    <h3 class="text-lg font-semibold text-slate-800">Project Engineer</h3>
+                                    <p class="text-md text-slate-600">CHC Consulting, Carlsbad, CA</p>
+                                    <p class="text-sm text-slate-500">2017 - 2018</p>
+                                     <ul class="mt-2 list-disc list-inside text-slate-700 space-y-2 text-sm">
+                                        <li class="experience-bullet" data-tags="product software change logistics"><strong>Team Coordination:</strong> Led a team of 5 design engineers, overseeing network designs for construction and ensuring adherence to quality standards.</li>
+                                        <li class="experience-bullet" data-tags="change logistics"><strong>Project Compliance:</strong> Facilitated regulatory compliance and smooth project progression by securing necessary permits and working closely with municipalities.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Education -->
+                        <section class="mt-8">
+                            <h2 class="text-2xl font-bold text-slate-900 section-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.084a1 1 0 0 0 0 1.838l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12v5a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-5"></path></svg>
+                                Education & Certifications
+                            </h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-800">M.S. Engineering Management</h3>
+                                    <p class="text-md text-slate-600">University of California, Los Angeles (2024)</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-800">B.S. Chemical and Biochemical Engineering</h3>
+                                    <p class="text-md text-slate-600">Colorado School of Mines (2017)</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-slate-800">Project Management Professional (PMP)</h3>
+                                    <p class="text-md text-slate-600">Project Management Institute (2025)</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Right Column: Skills & Competencies -->
+                    <div class="md:col-span-1">
+                        <section>
+                            <h2 class="text-2xl font-bold text-slate-900 section-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                Core Competencies
+                            </h2>
+                            <div class="space-y-4">
+                                <!-- Competencies here -->
+                                <div>
+                                    <h3 class="font-semibold text-slate-700 mb-2">Product & Software</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software">Product Roadmapping</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software">Agile/Scrum</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product">GTM Strategy</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="software">SDLC</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="software">MySQL & Python</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software">SaaS</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-slate-700 mb-2">Operations & Logistics</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="logistics">Demand Forecasting</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="logistics">Procurement</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="logistics">Supply Chain</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="change logistics">Lean Six Sigma</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="change">Value Stream Mapping</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-slate-700 mb-2">Leadership & Management</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software change logistics">Cross-Functional Leadership</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="change">Change Management</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="change">Stakeholder Engagement</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software change logistics">Vendor Management</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software change logistics">Financial Acumen</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-slate-700 mb-2">Regulatory & Quality</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software change logistics">FDA 21 CFR (11, 111, 117)</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="change">QMS Development</span>
+                                        <span class="skill-tag bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1 rounded-full border border-slate-200" data-tags="product software change logistics">Audit Readiness</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects & FAQ Panel -->
+            <div id="projects-panel" class="content-panel hidden">
+                 <!-- Gemini Feature Section -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900 section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+                        ✨ AI-Powered Cover Letter Assistant
+                    </h2>
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                        <p class="text-sm text-slate-600 mb-4">Enter a job title and company to instantly generate a tailored cover letter based on my resume.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input id="job-title-input" type="text" placeholder="Job Title (e.g., Product Manager)" class="w-full px-3 py-2 text-slate-700 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                            <input id="company-name-input" type="text" placeholder="Company Name (e.g., Optum)" class="w-full px-3 py-2 text-slate-700 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        </div>
+                        <button id="generate-letter-btn" class="mt-4 w-full sm:w-auto bg-sky-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-sky-700 transition-colors flex items-center justify-center gap-2">
+                            <svg id="gemini-loader" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span id="generate-letter-btn-text">Generate Cover Letter</span>
+                        </button>
+                        <div id="cover-letter-output-container" class="mt-4 hidden">
+                            <div id="cover-letter-output" class="p-4 bg-white border border-slate-300 rounded-md text-sm text-slate-800 whitespace-pre-wrap"></div>
+                            <button id="copy-letter-btn" class="mt-2 text-sm text-sky-600 hover:text-sky-800">Copy to Clipboard</button>
+                            <span id="copy-confirmation" class="ml-2 text-sm text-green-600 hidden">Copied!</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Notable Projects Section -->
+                <section>
+                    <h2 class="text-2xl font-bold text-slate-900 section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                        Notable Projects & Case Studies
+                    </h2>
+                    <div class="space-y-4">
+                        <!-- Projects here -->
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300" data-tags="product software change logistics">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">ERP & Inventory Management Software Build</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                <div class="case-study mt-2 text-slate-600 text-sm">
+                                    <h4>Situation</h4>
+                                    <p>The company was experiencing rapid growth but relied on disconnected spreadsheets for inventory, leading to inefficiencies, compliance risks, and limited visibility.</p>
+                                    <h4>Task</h4>
+                                    <p>To design and program a centralized, in-house ERP system to track inventory in real-time, support FDA 21 CFR Part 11 compliance, and automate reporting without the cost of a third-party solution.</p>
+                                    <h4>Action</h4>
+                                    <p>I led the architecture, programming, and validation of the platform. I designed the database, ensured compliance by validating against FDA Part 11, wrote all relevant SOPs, and trained end-users across departments.</p>
+                                    <h4>Result</h4>
+                                    <p>The system provided real-time inventory visibility, consolidated supplier information, and enabled accurate forecasting. This led to a <strong>95% reduction in stock-outs</strong>, improved production planning, and successfully passed compliance audits.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300" data-tags="change logistics product software">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">FDA Compliance and QMS Implementation</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                             <div class="details">
+                                <div class="case-study mt-2 text-slate-600 text-sm">
+                                    <h4>Situation</h4>
+                                    <p>The company was preparing for its first regulatory audits but had fragmented, non-compliant processes, posing a significant risk to growth and investment.</p>
+                                    <h4>Task</h4>
+                                    <p>To design and implement a fully FDA-compliant Quality Management System (QMS) from the ground up, covering 21 CFR Parts 11, 111, and 117, that would withstand third-party and FDA audits.</p>
+                                    <h4>Action</h4>
+                                    <p>I conducted a gap analysis, authored over 100 SOPs, and built the system architecture for approval workflows, version control, and audit readiness. I led a cross-functional team, delegated roles, and trained staff to ensure smooth adoption.</p>
+                                    <h4>Result</h4>
+                                    <p>The system was successfully implemented and <strong>passed multiple third-party and FDA audits with zero major findings</strong>. It enabled a <strong>3x increase in throughput</strong> under regulated conditions and became a foundational element for scaling the business.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300" data-tags="product software change">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">Project Manager – Custom LIMS Development</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                 <div class="case-study mt-2 text-slate-600 text-sm">
+                                    <h4>Situation</h4>
+                                    <p>The laboratory lacked a centralized system for sample and data traceability, creating potential for errors and inefficiencies as the volume of tests increased.</p>
+                                    <h4>Task</h4>
+                                    <p>To direct the full lifecycle of a custom Laboratory Information Management System (LIMS), from requirements gathering to final rollout, ensuring FDA Part 11 compliance.</p>
+                                    <h4>Action</h4>
+                                    <p>I led the project using Adaptive Software Development (ASD) and Agile principles. This involved gathering user requirements, defining the product roadmap, managing development sprints, authoring validation protocols, and overseeing the final implementation.</p>
+                                    <h4>Result</h4>
+                                    <p>The LIMS was <strong>delivered on time and within budget</strong>, providing robust, end-to-end sample and data traceability that met all regulatory requirements and supported operational scaling.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300" data-tags="product logistics">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">Multi-Product Launch Leadership</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                 <div class="case-study mt-2 text-slate-600 text-sm">
+                                    <h4>Situation</h4>
+                                    <p>The company needed to expand its product offerings to capture new market segments and drive revenue growth, but lacked a structured process for launching multiple products concurrently.</p>
+                                    <h4>Task</h4>
+                                    <p>To plan and execute the end-to-end launch of six new product lines, from market research and regulatory strategy to supply-chain onboarding and commercialization.</p>
+                                    <h4>Action</h4>
+                                    <p>I coordinated cross-functional teams including R&D, marketing, operations, and regulatory affairs. I developed a phased launch plan, managed timelines, onboarded new suppliers, and oversaw pilot production runs to ensure quality and scalability.</p>
+                                    <h4>Result</h4>
+                                    <p>All six product lines were launched on schedule, resulting in a combined <strong>$3.2M in new revenue</strong> and expanding the company's SKU count by <strong>200%</strong>. The structured process became the blueprint for future product launches.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300" data-tags="logistics change">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">Vendor & CMO Management Program</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                 <div class="case-study mt-2 text-slate-600 text-sm">
+                                    <h4>Situation</h4>
+                                    <p>As the company scaled, its reliance on external vendors and contract manufacturing organizations (CMOs) grew, but there was no formal program to manage performance, quality, or compliance.</p>
+                                    <h4>Task</h4>
+                                    <p>To launch a comprehensive vendor and CMO oversight program from the ground up to ensure quality, manage risk, and enable scalable, compliant third-party partnerships.</p>
+                                    <h4>Action</h4>
+                                    <p>I created risk-based qualification procedures, developed standardized audit protocols, and implemented performance scorecards with clear KPIs. I personally conducted over 15 supplier audits and aligned the entire program with FDA 21 CFR Parts 111 and 117.</p>
+                                    <h4>Result</h4>
+                                    <p>The program established a robust and scalable framework for managing third-party partners. It improved vendor performance, reduced supply chain risks, and ensured full compliance during regulatory audits.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ Section -->
+                <section class="mt-8">
+                    <h2 class="text-2xl font-bold text-slate-900 section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><path d="M9.1 9a3 3 0 1 1 5.82 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+                        Frequently Asked Questions
+                    </h2>
+                    <div class="space-y-4">
+                        <!-- FAQs here -->
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">What is your philosophy for managing uncertainty?</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                <p class="mt-2 text-slate-600 text-sm">My philosophy is to embrace uncertainty with structure, adaptability, and communication. I rely on continuous communication (Scrum meetings, check-ins) to surface risks early. I focus on building modular and flexible project architectures to reduce sunk costs when goals evolve. Finally, I use iterative planning and risk mapping, breaking work into smaller increments to pivot quickly without derailing the larger roadmap.</p>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">What is your management style?</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                <p class="mt-2 text-slate-600 text-sm">My management style is centered on creating clarity and fostering accountability. I believe underperformance is often a symptom of unclear expectations or poor feedback loops. My approach is to start by clarifying KPIs, increasing check-in frequency, and making deliverables visible through dashboards. I balance empathy with structure, but I don't let ambiguity fester. Accountability thrives when people understand expectations, see their impact, and have the tools they need to succeed.</p>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">How do you ensure operations stay aligned with product and engineering?</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                <p class="mt-2 text-slate-600 text-sm">I treat cross-functional alignment as a core function of my role. I establish recurring syncs between Operations, Product, and Engineering to review shared metrics, upcoming releases, and friction points. I see my role as the translator between frontline execution and system design, mapping operational pain points into development requirements and validating solutions from both a compliance and workflow perspective.</p>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">How do you handle resistance to change?</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                <p class="mt-2 text-slate-600 text-sm">I believe resistance stems from uncertainty or a lack of ownership. To overcome it, I focus on early engagement, clear communication of the "why," and demonstrating quick, visible wins. For example, when rolling out a new inventory system, I involved end-users in the design process, framed benefits in their language (less paperwork), and piloted the system with internal champions. This approach turned initial resistance into advocacy for the new system.</p>
+                            </div>
+                        </div>
+                        <div class="project-card bg-white border border-slate-200 rounded-lg p-4 transition-all duration-300">
+                            <div class="flex justify-between items-center cursor-pointer" onclick="toggleDetails(this)">
+                                <h3 class="font-semibold text-slate-800">What is the biggest operational risk in a hypergrowth company?</h3>
+                                <span class="text-sky-600 text-2xl font-thin transform transition-transform duration-300">+</span>
+                            </div>
+                            <div class="details">
+                                <p class="mt-2 text-slate-600 text-sm">In hypergrowth, the biggest risk is scaling chaos instead of systems. When operations scale reactively, without process, documentation, or clear accountability, you create bottlenecks, burnout, and compliance risk. For a company in a regulated, mission-critical space, the cost of inefficiency is compounded by the cost of errors. My approach is to create foundational frameworks like SLAs, SOPs, and performance dashboards so you can scale confidently and proactively. Growth should create leverage, not instability.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- About Me Panel -->
+            <div id="about-panel" class="content-panel hidden">
+                <section>
+                    <h2 class="text-2xl font-bold text-slate-900 section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-600"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        About Me
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="text-slate-700 leading-relaxed space-y-4">
+                            <p>My name is Jesse LakeYoungberg, and I currently reside in Solana Beach, CA. I moved to the San Diego area in 2017, having grown up in Oregon and Colorado.</p>
+                            <p>This background gave me a deep appreciation for the outdoors, and I love activities like camping and surfing. When I'm not outside, I enjoy cooking and playing soccer.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                             <div class="aspect-square bg-slate-100 rounded-lg shadow-md"><img src="https://i.imgur.com/ZdBsKmA.jpeg" alt="Surfing" class="w-full h-full rounded-lg object-cover"></div>
+                             <div class="aspect-square bg-slate-100 rounded-lg shadow-md"><img src="https://i.imgur.com/T4QPzzN.jpeg" alt="Soccer" class="w-full h-full rounded-lg object-cover"></div>
+                             <div class="aspect-square bg-slate-100 rounded-lg shadow-md"><img src="https://i.imgur.com/dKLWKyW.jpeg" alt="Camping" class="w-full h-full rounded-lg object-cover"></div>
+                             <div class="aspect-square bg-slate-100 rounded-lg shadow-md"><img src="https://i.imgur.com/MefGIlI.png" alt="Cooking" class="w-full h-full rounded-lg object-cover"></div>
+                       </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- SCRIPT FOR TAB NAVIGATION ---
+        const tabButtons = document.getElementById('tab-buttons');
+        const contentPanels = document.querySelectorAll('.content-panel');
+
+        tabButtons.addEventListener('click', (event) => {
+            if (event.target.tagName !== 'BUTTON') return;
+
+            // Deactivate all tabs and hide all panels
+            tabButtons.querySelector('.active').classList.remove('active');
+            contentPanels.forEach(panel => panel.classList.add('hidden'));
+
+            // Activate the clicked tab and show its panel
+            event.target.classList.add('active');
+            const targetPanelId = event.target.dataset.tab + '-panel';
+            document.getElementById(targetPanelId).classList.remove('hidden');
+        });
+
+        // --- SCRIPT FOR PROJECT CARD EXPANSION ---
+        function toggleDetails(element) {
+            const details = element.nextElementSibling;
+            const icon = element.querySelector('span');
+            const isOpen = details.classList.contains('open');
+
+            // Close all other open cards
+            document.querySelectorAll('.details.open').forEach(openDetail => {
+                if (openDetail !== details) {
+                    openDetail.classList.remove('open');
+                    const otherIcon = openDetail.previousElementSibling.querySelector('span');
+                    otherIcon.textContent = '+';
+                    otherIcon.classList.remove('rotate-45');
+                }
+            });
+            
+            // Toggle the clicked card
+            details.classList.toggle('open');
+            if (!isOpen) {
+                icon.textContent = '-';
+                icon.classList.add('rotate-45');
+            } else {
+                icon.textContent = '+';
+                icon.classList.remove('rotate-45');
+            }
+        }
+
+        // --- SCRIPT FOR INTERACTIVE FILTERING ---
+        const filterContainer = document.getElementById('filter-container');
+        const skillTags = document.querySelectorAll('.skill-tag');
+        const projectCards = document.querySelectorAll('.project-card');
+        const experienceBullets = document.querySelectorAll('.experience-bullet');
+
+        filterContainer.addEventListener('click', (event) => {
+            if (event.target.tagName !== 'BUTTON') return;
+
+            const filter = event.target.dataset.filter;
+
+            // Update active button style
+            filterContainer.querySelector('.active').classList.remove('active');
+            event.target.classList.add('active');
+
+            // Filter Skill Tags
+            skillTags.forEach(tag => {
+                const tags = tag.dataset.tags.split(' ');
+                if (filter === 'all' || tags.includes(filter)) {
+                    tag.classList.add('highlight');
+                } else {
+                    tag.classList.remove('highlight');
+                }
+            });
+
+            // Filter Project Cards
+            projectCards.forEach(card => {
+                // Only process cards that have data-tags
+                if (card.dataset.tags) {
+                    const tags = card.dataset.tags.split(' ');
+                    if (filter === 'all' || tags.includes(filter)) {
+                        card.classList.add('highlight');
+                    } else {
+                        card.classList.remove('highlight');
+                    }
+                }
+            });
+            
+            // Filter Experience Bullets
+            experienceBullets.forEach(bullet => {
+                const tags = bullet.dataset.tags.split(' ');
+                if (filter === 'all' || tags.includes(filter)) {
+                    bullet.classList.add('highlight-text');
+                } else {
+                    bullet.classList.remove('highlight-text');
+                }
+            });
+
+            // If "View All" is clicked, remove all highlights
+            if (filter === 'all') {
+                 skillTags.forEach(tag => tag.classList.remove('highlight'));
+                 projectCards.forEach(card => card.classList.remove('highlight'));
+                 experienceBullets.forEach(bullet => bullet.classList.remove('highlight-text'));
+            }
+        });
+        
+        // --- SCRIPT FOR GEMINI API FEATURE ---
+        const generateBtn = document.getElementById('generate-letter-btn');
+        const generateBtnText = document.getElementById('generate-letter-btn-text');
+        const loader = document.getElementById('gemini-loader');
+        const outputContainer = document.getElementById('cover-letter-output-container');
+        const outputDiv = document.getElementById('cover-letter-output');
+        const copyBtn = document.getElementById('copy-letter-btn');
+        const copyConfirmation = document.getElementById('copy-confirmation');
+
+        generateBtn.addEventListener('click', generateCoverLetter);
+        copyBtn.addEventListener('click', () => copyToClipboard(outputDiv.innerText));
+		
+		async function generateCoverLetter() {
+			const jobTitle = document.getElementById('job-title-input').value;
+			const companyName = document.getElementById('company-name-input').value;
+
+			if (!jobTitle || !companyName) {
+				alert("Please enter both a Job Title and a Company Name.");
+				return;
+			}
+
+			loader.style.display = 'block';
+			generateBtnText.innerText = 'Generating...';
+			generateBtn.disabled = true;
+			
+			const resumeContext = `
+				Professional Summary: Results-driven Program and Product Management Leader with over 9 years of experience...
+				// ... (keep the rest of your resume context string as is) ...
+				Certifications: PMP.
+			`;
+
+			// This is the new, secure way to call your function
+			try {
+				const response = await fetch('/.netlify/functions/generate-letter', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ 
+						jobTitle: jobTitle, 
+						companyName: companyName,
+						resumeContext: resumeContext 
+					})
+				});
+
+				const result = await response.json();
+
+				if (response.ok) {
+					outputDiv.innerText = result.letter;
+				} else {
+					throw new Error(result.error || "An unknown error occurred.");
+				}
+				
+				outputContainer.style.display = 'block';
+
+			} catch (error) {
+				console.error("Error calling serverless function:", error);
+				outputDiv.innerText = `Sorry, an error occurred: ${error.message}. Please try again.`;
+				outputContainer.style.display = 'block';
+			} finally {
+				loader.style.display = 'none';
+				generateBtnText.innerText = 'Generate Cover Letter';
+				generateBtn.disabled = false;
+			}
+		}
+
+        function copyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                copyConfirmation.style.display = 'inline';
+                setTimeout(() => {
+                    copyConfirmation.style.display = 'none';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+    </script>
+
+</body>
+</html>
